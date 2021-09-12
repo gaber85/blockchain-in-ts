@@ -1,9 +1,11 @@
 import { Block } from './Block';
 
 export class BlockChain {
-  private chain: Block[]
+  private chain: Block[];
+  private difficulty: number;
   constructor() {
     this.chain = [this.createGenesisBlock()];
+    this.difficulty = 5;
   }
 
   createGenesisBlock(): Block {
@@ -18,7 +20,7 @@ export class BlockChain {
   /** Adds a new block to the chain */
   addBlock(newBlock: Block): void {
     newBlock.previousHash = this.getLatestBlock().hash;
-    newBlock.hash = newBlock.calculateHash();
+    newBlock.mineBlock(this.difficulty);
     this.chain.push(newBlock);
   }
 
